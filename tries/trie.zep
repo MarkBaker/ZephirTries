@@ -167,7 +167,7 @@ class Trie implements ITrie
         while (i < keyLen) {
             let character = substr(key, i, 1);
 
-            if !isset trieNode->children[character] {
+            if unlikely !isset trieNode->children[character] {
                 if create {
                     let trieNode->children[character] = new TrieNode();
                 } else {
@@ -204,7 +204,7 @@ class Trie implements ITrie
             }
         }
 
-        if isset trieNode->children {
+        if !empty trieNode->children {
             for character, trie in trieNode->children {
                 collection->merge(this->getAllChildren(trie, prefix . character));
             }
