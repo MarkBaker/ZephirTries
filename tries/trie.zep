@@ -156,26 +156,22 @@ class Trie implements ITrie
      * @param   boolean   $create    Flag indicating if we should create new nodes in the Trie as we traverse it
      * @return  TrieNode | boolean   False if the specified node doesn't exist, and not flagged to create
      */
-    protected function getTrieNodeByKey(key, boolean create = false)
+    protected function getTrieNodeByKey(string key, boolean create = false)
     {
-        var trieNode, keyLen, i, character;
+        var trieNode;
+        char character;
 
         let trieNode = this->trie;
-        let keyLen = strlen(key);
-        let i = 0;
 
-        while (i < keyLen) {
-            let character = substr(key, i, 1);
-
-            if unlikely !isset trieNode->children[character] {
+        for character in key {
+            if !isset trieNode->children[(string) character] {
                 if create {
-                    let trieNode->children[character] = new TrieNode();
+                    let trieNode->children[(string) character] = new TrieNode();
                 } else {
                     return false;
                 }
             }
-            let trieNode = trieNode->children[character];
-            let i++;
+            let trieNode = trieNode->children[(string) character];
         }
 
         return trieNode;
